@@ -21,10 +21,10 @@
  
 # Usage
  
-ubuntuにtpl-codeをインストール後、
+ubuntuにtpl-codeをインストール後、tpl-code中の
 
 ```
-tudent_nameとstudent_number
+student_nameとstudent_number
 ```
 を変更し、パスを通すと
 ```
