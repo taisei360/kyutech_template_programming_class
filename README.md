@@ -38,7 +38,6 @@ tpl-code
 
 /* your_number your_name レポート課題01 05月27日 */
 #include <stdio.h>
-#include <math.h>
 
 int main(void){
     return 0;
