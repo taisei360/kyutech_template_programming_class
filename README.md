@@ -21,7 +21,7 @@
  
 # Usage
  
-ubuntuにインストール後、
+ubuntuにtpl-codeをインストール後、
 
 ```
 tudent_nameとstudent_number
