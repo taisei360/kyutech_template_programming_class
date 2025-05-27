@@ -1,0 +1,93 @@
+#!/usr/bin/bash
+
+#----個人の情報を入力------
+student_name="your_name" #名前
+student_number="your_number" #学籍番号
+#--------------------------
+
+editor=0  # 0: emacs, 1: VSCode(未インストール時はエラー)
+
+# 引数の処理
+if [[ "$1" == -* ]]; then
+    
+    # オプションが指定されている場合
+    if [[ "$1" == "-e" || "$1" == "--emacs" ]]; then
+        editor=0
+        
+        #ファイル名が指定されている場合
+        if [ ! -z "$2" ]; then 
+        file_name=$2
+        fi
+
+    elif [[ "$1" == "-v" || "$1" == "--vsc" ]]; then
+        editor=1
+        
+        # ファイル名が指定されている場合
+        if [ ! -z "$2" ]; then 
+            file_name=$2
+        fi
+    
+    # 無効なオプションが指定された場合
+    else 
+        echo -e "無効なオプションです。\n使用法: emacsで開く場合は ./tpl-code -e ファイル名\nVSCodeで開く場合(未インストール時はエラー)は ./tpl-code -v ファイル名\n"
+        exit 1
+    fi
+
+# オプションが指定されていない場合
+else 
+    file_name=$1
+fi
+
+# ファイル名が指定されていない場合
+if [ -z "$file_name" ]; then 
+    echo -e "ファイル名が指定されていません。\n作成したいファイル名を入力してください。\n例: example01.c"
+    read input_file_name
+    file_name=$input_file_name
+    
+    # 入力されたファイル名が空でないか確認
+    if [ -z "$input_file_name" ]; then
+        echo "ファイル名が入力されませんでした。終了します。"
+        exit 1
+    fi
+fi
+
+#ファイルの存在確認
+if [ -e "$file_name" ]; then
+  echo -e "指定されたファイルはすでに存在します。\n上書きしますか？(y/n)"
+  read overwrite
+
+  if [[ "$overwrite" != "y" ]]; then
+    echo "ファイルの作成を中止します。"
+    exit 1
+  fi
+fi
+
+# 日付の取得
+today=$(date +"%m月%d日")
+#課題の種類を入力
+echo -e "\n演習の種類を入力してください\n例: レポート課題01, 実験01, 演習01"
+read kind
+echo -e "OK !!\n"
+
+# 学籍番号と名前、課題の種類、日付をコメントとしてファイルに書き込む
+#ここのアスタリスク(*)を出力するためのバックスラッシュ(\)が消えず、
+#/\* 123C456 九工大 太郎 レポート課題01  05月27日  */　と書き込まれてしまう。
+student_info="/\* $student_number $student_name $kind $today */"
+
+#ファイルの作成
+cat <<EOF > "$file_name"
+$student_info
+#include <stdio.h>
+
+int main(void){
+    return 0;
+}
+EOF
+
+
+#開くエディタの選択 
+if [ "$editor" -eq 1 ]; then
+    code ./$file_name
+else
+    emacs ./$file_name
+fi
