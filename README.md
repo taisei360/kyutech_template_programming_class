@@ -33,12 +33,10 @@ tpl-code
  で実行できる。
 
 
-# Help
-出力されるファイルのアスタリスクの前の
- バックスラッシュを消したいです。
+# Output
 ```
 
-/\* your_number your_name レポート課題01 05月27日 */
+/* your_number your_name レポート課題01 05月27日 */
 #include <stdio.h>
 #include <math.h>
 
