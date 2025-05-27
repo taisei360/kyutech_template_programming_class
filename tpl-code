@@ -70,9 +70,7 @@ read kind
 echo -e "OK !!\n"
 
 # 学籍番号と名前、課題の種類、日付をコメントとしてファイルに書き込む
-#ここのアスタリスク(*)を出力するためのバックスラッシュ(\)が消えず、
-#/\* 123C456 九工大 太郎 レポート課題01  05月27日  */　と書き込まれてしまう。
-student_info="/\* $student_number $student_name $kind $today */"
+student_info="/* $student_number $student_name $kind $today */"
 
 #ファイルの作成
 cat <<EOF > "$file_name"
